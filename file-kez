@@ -1,0 +1,104 @@
+<html>
+<head>
+<meta charset="utf-16>">
+<?php
+$fname = "C:\\xampp\\htdocs\\text\\szovegfile.txt";
+
+function create($fname)
+
+{  $text=""; 
+	if(isset($_POST["vname"]) &&
+	 isset($_POST["kname"]) &&
+	 isset($_POST["mail"]) &&
+	 isset($_POST["mhely"]))
+		$text = "ß".$_POST["vname"]."ß".$_POST["kname"]."ß"
+			.$_POST["mail"]."ß".$_POST["mhely"];
+	 
+	if(isset($_POST["kor"]))	$text = $text."ß".$_POST["kor"];
+	else $text = $text."ß";
+
+	if (isset($_POST["nem"]))	
+	  $text = $text."ß".$_POST["nem"]."ß";
+	else $text = $text."ß";
+	 $text = $text."ß"."\n";
+
+	$fv = fopen($fname,"a"); 
+		fwrite($fv,$text);		
+	 
+	fclose($fv);
+}
+function update() 
+{
+   echo "update";
+}
+function del() 
+{
+   echo "del";
+}
+function search() 
+{
+   echo "search";
+}
+
+
+/*$fv = fopen($fname,"c");
+fclose($fv);*/
+//
+if(isset($_POST["op"]))
+{
+	$muvelet=$_POST["op"];
+	switch($muvelet)
+	{
+		case "create":
+		create($fname) ;
+		break;
+		case "update" :
+		update();
+		break;
+		case "delete" :
+		del(); 
+		break;
+		case "search" :
+		search();
+		break;
+	}
+
+}
+
+
+?>
+
+</head>
+<body>
+	<form id="in_form" action="" method="post">
+	Munkamenet:
+	<select id="op" name="op">
+		<option value="create">Új elem</option>
+		<option value="update">Módosítás</option>
+		<option value="delete">törlés</option>
+		<option value="search">Keresés</option>
+	</select><br><br>
+		Vezeték név*:
+		<input type="text" id="vname" name="vname"><br><br>
+		Kereszt név*:
+		<input type="text" id="kname" name="kname"><br><br>
+		Email cím*:
+		<input type="text" id="mail" name="mail"><br><br>		
+		Kor:
+		<input type="number" min="0" max="100" step="1"
+				value="9"><br><br>
+		Nem:	<br>	
+		<input type="radio" name="nem" value="male" checked> Male<br>
+		<input type="radio" name="nem" value="female"> Female<br>
+		<input type="radio" name="nem" value="other"> Other	<br><br>
+		<input type="text" id="mhely" name="mhely" 
+			placeholder="Munkahely*"><br><br>
+		<input type="hidden" id="aktiv" name="aktiv">	
+		<input type="submit" id="OK" name="OK">	
+	    			
+		
+	</form>
+
+
+</body>
+</html>
